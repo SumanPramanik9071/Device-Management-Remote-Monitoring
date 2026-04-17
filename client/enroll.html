@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SP Tech Safe — Device Setup</title>
+  <meta name="description" content="Connecting your device to SP Tech Safe Device Manager.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cyan:   #3de8d4;
+      --indigo: #6366f1;
+      --bg:     #07091c;
+      --card:   rgba(17, 21, 54, 0.85);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── Animated background ── */
+    .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.18;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+    .orb-1 { width: 380px; height: 380px; background: var(--cyan);   top: -100px; left: -100px; animation-delay: 0s; }
+    .orb-2 { width: 300px; height: 300px; background: var(--indigo); bottom: -80px; right: -80px; animation-delay: -4s; }
+    .orb-3 { width: 200px; height: 200px; background: #a855f7;       top: 50%;    left: 50%; animation-delay: -2s; }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50%       { transform: translate(20px, -20px) scale(1.06); }
+    }
+
+    /* grid overlay */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(61,232,212,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61,232,212,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* ── Card ── */
+    .enroll-card {
+      position: relative; z-index: 1;
+      width: min(480px, 94vw);
+      background: var(--card);
+      border: 1px solid rgba(61,232,212,.12);
+      border-radius: 24px;
+      padding: 44px 40px 36px;
+      box-shadow: 0 20px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      animation: cardIn .6s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(32px) scale(.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Top accent bar */
+    .card-bar {
+      position: absolute; top: 0; left: 24px; right: 24px; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--indigo));
+      border-radius: 0 0 6px 6px;
+    }
+
+    /* Logo */
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 32px;
+    }
+    .brand-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--cyan), var(--indigo));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: #fff;
+      box-shadow: 0 4px 20px rgba(61,232,212,.3);
+    }
+    .brand-text .name { font-size: 18px; font-weight: 800; letter-spacing: 1.5px; color: #fff; }
+    .brand-text .name em { color: var(--cyan); font-style: normal; }
+    .brand-text .sub  { font-size: 9px; letter-spacing: 3px; color: #8892b0; text-transform: uppercase; }
+
+    /* Title */
+    .enroll-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .enroll-sub   { font-size: 13px; color: #94a3b8; margin-bottom: 32px; line-height: 1.5; }
+
+    /* ── Progress Steps ── */
+    .steps { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .step-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 16px; border-radius: 12px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.05);
+      transition: all .4s ease;
+    }
+    .step-item.active {
+      background: rgba(61,232,212,.06);
+      border-color: rgba(61,232,212,.2);
+    }
+    .step-item.done {
+      background: rgba(16,185,129,.06);
+      border-color: rgba(16,185,129,.2);
+    }
+    .step-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: rgba(255,255,255,.05);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: #64748b;
+      flex-shrink: 0; transition: all .4s ease;
+    }
+    .step-item.active .step-icon { background: rgba(61,232,212,.15); color: var(--cyan); }
+    .step-item.done  .step-icon  { background: rgba(16,185,129,.15); color: #10b981; }
+    .step-label { font-size: 13px; font-weight: 500; color: #6b7280; flex: 1; }
+    .step-item.active .step-label { color: #e2e8f0; }
+    .step-item.done  .step-label  { color: #10b981; }
+    .step-tick { display: none; font-size: 14px; color: #10b981; }
+    .step-item.done .step-tick  { display: block; }
+    .step-item.active .step-spin { display: block; }
+    .step-spin { display: none; font-size: 13px; color: var(--cyan); animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .status-bar {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: #8892b0; margin-bottom: 8px;
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.5;transform:scale(.8);} }
+
+    .progress-track {
+      height: 4px; background: rgba(255,255,255,.06); border-radius: 4px;
+      overflow: hidden; margin-bottom: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--indigo));
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1s ease;
+    }
+
+    /* ── Success State ── */
+    #enrollSuccess {
+      display: none; flex-direction: column; align-items: center; text-align: center;
+    }
+    .success-ring {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(16,185,129,.15), rgba(61,232,212,.15));
+      border: 2px solid #10b981;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; color: #10b981; margin-bottom: 20px;
+      animation: successPop .5s cubic-bezier(.34,1.56,.64,1) both;
+      box-shadow: 0 0 30px rgba(16,185,129,.25);
+    }
+    @keyframes successPop { from{opacity:0;transform:scale(.5);} to{opacity:1;transform:scale(1);} }
+    .success-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+    .success-sub   { font-size: 13px; color: #94a3b8; margin-bottom: 24px; line-height: 1.6; }
+    .success-details {
+      width: 100%; background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07); border-radius: 14px;
+      padding: 16px; margin-bottom: 20px; text-align: left;
+    }
+    .success-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,.04); font-size: 12px;
+    }
+    .success-row:last-child { border-bottom: none; }
+    .success-row .lbl { color: #64748b; }
+    .success-row .val { color: #e2e8f0; font-weight: 500; font-size: 11px; text-align: right; max-width: 60%; word-break: break-word; }
+    .success-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.3);
+      color: #10b981; padding: 6px 16px; border-radius: 99px; font-size: 12px; font-weight: 600;
+    }
+
+    /* ── Error State ── */
+    #enrollError {
+      display: none; flex-direction: column; align-items: center; text-align: center;
+    }
+    .error-ring {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(244,63,94,.1); border: 2px solid #f43f5e;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: #f43f5e; margin-bottom: 16px;
+    }
+    .error-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .error-msg   { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
+    .btn-retry {
+      background: linear-gradient(135deg, var(--cyan), var(--indigo));
+      color: white; border: none; border-radius: 10px;
+      padding: 12px 28px; font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: opacity .2s;
+    }
+    .btn-retry:hover { opacity: .85; }
+
+    /* Footer */
+    .enroll-footer {
+      margin-top: 20px; font-size: 11px; color: #475569;
+      display: flex; align-items: center; gap: 6px; justify-content: center;
+    }
+    .enroll-footer i { color: var(--cyan); font-size: 10px; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="bg-grid"></div>
+
+  <div class="enroll-card">
+    <div class="card-bar"></div>
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="brand-text">
+        <div class="name">TECH<em>Safe</em></div>
+        <div class="sub">Device Manager</div>
+      </div>
+    </div>
+
+    <!-- ── PROGRESS VIEW ── -->
+    <div id="enrollProgress">
+      <div class="enroll-title">Connecting Device</div>
+      <div class="enroll-sub">Please keep this page open while we securely connect your device to the management dashboard.</div>
+
+      <div class="steps">
+        <div class="step-item" id="step-0">
+          <div class="step-icon">
+            <i class="fa-solid fa-link step-spin"></i>
+            <i class="fa-solid fa-circle-check step-tick"></i>
+          </div>
+          <span class="step-label">Initializing secure connection</span>
+          <i class="fa-solid fa-circle-check step-tick"></i>
+          <i class="fa-solid fa-spinner step-spin"></i>
+        </div>
+        <div class="step-item" id="step-1">
+          <div class="step-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+          <span class="step-label">Reading device information</span>
+          <i class="fa-solid fa-circle-check step-tick"></i>
+          <i class="fa-solid fa-spinner step-spin"></i>
+        </div>
+        <div class="step-item" id="step-2">
+          <div class="step-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <span class="step-label">Requesting location access</span>
+          <i class="fa-solid fa-circle-check step-tick"></i>
+          <i class="fa-solid fa-spinner step-spin"></i>
+        </div>
+        <div class="step-item" id="step-3">
+          <div class="step-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+          <span class="step-label">Syncing to dashboard</span>
+          <i class="fa-solid fa-circle-check step-tick"></i>
+          <i class="fa-solid fa-spinner step-spin"></i>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <div class="status-dot"></div>
+        <span id="statusText">Starting...</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- ── SUCCESS VIEW ── -->
+    <div id="enrollSuccess">
+      <div class="success-ring"><i class="fa-solid fa-check"></i></div>
+      <div class="success-title">Device Connected!</div>
+      <div class="success-sub">Your device has been successfully registered and is now visible in the SP Tech Safe dashboard.</div>
+      <div class="success-details">
+        <div class="success-row"><span class="lbl">Device</span>      <span class="val" id="successModel">—</span></div>
+        <div class="success-row"><span class="lbl">OS</span>          <span class="val" id="successOS">—</span></div>
+        <div class="success-row"><span class="lbl">Resolution</span>  <span class="val" id="successRes">—</span></div>
+        <div class="success-row"><span class="lbl">Language</span>    <span class="val" id="successLang">—</span></div>
+        <div class="success-row"><span class="lbl">Timezone</span>    <span class="val" id="successTZ">—</span></div>
+        <div class="success-row"><span class="lbl">Battery</span>     <span class="val" id="successBattery">—</span></div>
+      </div>
+      <div class="success-badge"><i class="fa-solid fa-circle-check"></i> Active in Dashboard</div>
+    </div>
+
+    <!-- ── ERROR VIEW ── -->
+    <div id="enrollError">
+      <div class="error-ring"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div class="error-title">Connection Failed</div>
+      <div class="error-msg" id="errorMsg">An error occurred during enrollment.</div>
+      <button class="btn-retry" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i> Try Again</button>
+    </div>
+
+    <div class="enroll-footer">
+      <i class="fa-solid fa-lock"></i>
+      Secured by SP Tech Safe — End-to-End Encrypted
+    </div>
+  </div>
+
+  <script src="js/enroll.js"></script>
+</body>
+</html>

